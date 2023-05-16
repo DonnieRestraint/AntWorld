@@ -1,3 +1,4 @@
+# YYH rgb to hex的转换函数
 def rgb_to_hex(red, green, blue):
     """%02x:在C语言中表示以十六进制输出,2为指定的输出字段的宽度.如果位数小于2,则左端补0,右对齐
     >>> rgb_to_hex((122,211,131))

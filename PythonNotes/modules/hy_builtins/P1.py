@@ -1,3 +1,4 @@
+# YYH property属性装饰器
 class Animal(object):
 
     def __init__(self):

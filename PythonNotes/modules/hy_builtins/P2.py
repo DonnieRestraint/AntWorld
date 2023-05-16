@@ -1,3 +1,4 @@
+# YYH 类像函数一样调用需要实现__call__方法； property(get, set, del, doc)
 
 
 class Animal(object):

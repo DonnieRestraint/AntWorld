@@ -78,5 +78,6 @@ designer.exe
 ```
 :/images/checkbox-input.png
 qrc:///mf/check
+:/check
 ```
 
