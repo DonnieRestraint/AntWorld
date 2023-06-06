@@ -8,13 +8,6 @@ from matplotlib.ticker import MultipleLocator
 
 
 def resource_path(relative_path):
-    # 打包相关的问题：资源路径寻址. 已解决
-    # python35\Scripts\pyinstaller.exe -F P2.py --add-data="D:\WORKSPACE\Company_Projects\DesenseOtaReport\TD\Montserrat.ttf;."
-    # 在fileName.spec中的 datas=[("fonts\\Montserrat.ttf","./fonts/")],
-    # 其中第二个参数可以用.代表用户的临时路径(C:\Users\F1237055\AppData\Local\Temp\临时文件夹\)下;
-    # ./fonts/代表资源会释放在临时路径Temp/临时文件夹/fonts的路径下;
-    # 调用时可以以./fonts/为前缀访问当前临时路径文件夹下fonts下的的资源
-
     if getattr(sys, 'frozen', False):  # 是否Bundle Resource
         base_path = sys._MEIPASS
     else:

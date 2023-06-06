@@ -92,6 +92,9 @@ def demo2(figsize, labels):
     ax0.set_xlim(y_range)
     # plt.xlim(x_range)
     # plt.ylim(y_range)
+    # 设置轴的颜色
+    ax0.spines["top"].set_color("none")
+    ax0.spines["bottom"].set_position(("data", 0))
     set_bg(fig, ax0, x, y_range, labels)
 
     plt.show()
