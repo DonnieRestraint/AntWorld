@@ -1,5 +1,5 @@
 """
-QWidget#MainFrame{
+QMainWindow#MainFrame{
     border-image: url(:/images/bg001.png) no-repeat 0px 0px;
 }
 
