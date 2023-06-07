@@ -67,7 +67,7 @@ class MainFrame(QMainWindow, DragAlg):
     def setInt(self, length, ratio):
         return int(length * ratio)
 
-    def eventFilter(self, obj: 'QObject', event: 'QEvent') -> bool:
+    def eventFilter(self, source, event) -> bool:
         """使用事件过滤器需要继承自QObject"""
         if event.type() in [QEvent.Type.MouseButtonPress, QEvent.Type.MouseMove, QEvent.Type.MouseButtonRelease]:
             # event.accept()
