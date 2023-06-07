@@ -16,6 +16,11 @@ class Demo(QWidget):
 
 
 if __name__ == '__main__':
+    """
+    pylupdate5 main.py  -ts eng-chs.ts
+    pylupdate5 main.py  -ts eng-fr.ts
+    lrelease eng-fr.ts eng-chs.ts
+    """
     app = QApplication(sys.argv)
     trans = QTranslator(app)
     trans.load('eng-chs')
