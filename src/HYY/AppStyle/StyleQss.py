@@ -1,8 +1,7 @@
 """
 QWidget#MainFrame{
-    background-color:rgba(200,200,200,255);
+    border-image: url(:/images/bg001.png) no-repeat 0px 0px;
 }
-
 
 MenuPage{}
 QWidget#title_widget {
@@ -119,8 +118,46 @@ QPushButton#TaskPushButton {
     font-weight: %(font_bold)s;
     font-family:%(font_family)s;
 }
-QLineEdit#TaskLineEdit{
-    background:white;
+
+QLineEdit#filePath {
+    padding:0px;
+    margin:5px 5px 5px 5px;
+
+    background-color: rgba%(white)s;
+    color:rgba(143,143,143,%(opacity)s);
+
+    border: 0px solid grey;
+    border-radius:0px;
+
+    font-size: 14px;
+    font-weight: %(font_bold)s;
+    font-family:%(font_family)s;
+}
+QLineEdit#saltInput {
+    padding:0px;
+    margin:5px 5px 5px 5px;
+
+    background-color: rgba%(white)s;
+    color:rgba(143,143,143,%(opacity)s);
+
+    border: 0px solid grey;
+    border-radius:0px;
+    font-size: 14px;
+    font-weight: %(font_bold)s;
+    font-family:%(font_family)s;
+}
+QPushButton#runButton{
+    padding:0px;
+    margin:5px 5px 5px 5px;
+    background-color: rgba%(white)s;
+    color:rgba(143,143,143,%(opacity)s);
+
+    border: 0px solid grey;
+    border-radius:5px;
+
+    font-size: 14px;
+    font-weight: %(font_bold)s;
+    font-family:%(font_family)s;
 }
 """
 from PyQt5.QtGui import QFont
@@ -131,8 +168,8 @@ white = (255, 255, 255)
 font_normal = 400  # 正常字体
 font_bold = 700  # 加粗字体
 moon_light_color = (255, 255, 204, 200)
-nav_color = (230, 248, 239, 255)
-nav_font_color = (250, 200, 200, 255)
+nav_color = (57, 55, 57, 255)
+nav_font_color = (118, 101, 91, 255)
 opacity = 1
 nav_border = 0
 font_family = "monospace "

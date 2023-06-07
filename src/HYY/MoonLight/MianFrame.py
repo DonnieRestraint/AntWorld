@@ -1,7 +1,7 @@
 import sys
 from PyQt5 import QtGui
 from PyQt5.QtCore import QSize, Qt, QRectF, QRect, QEvent, pyqtSignal
-from PyQt5.QtWidgets import QWidget, QApplication
+from PyQt5.QtWidgets import QWidget, QApplication, QMainWindow
 
 from AppAlg.Move import DragAlg
 from AppStyle.StyleLoader import Loader
@@ -13,7 +13,7 @@ from MoonLight.NavBar import NavWidget
 from MoonLight.MenuBar import TitleWidget
 from PyQt5.QtGui import QMouseEvent
 import Resource.resource_qrc
-
+from AppStyle.StyleQss import StyleQss
 import cgitb
 
 DEBUG = True
@@ -21,7 +21,7 @@ DEBUG = True
 cgitb.enable(format='text') if DEBUG else ...
 
 
-class MainFrame(QWidget, DragAlg):
+class MainFrame(QMainWindow, DragAlg):
 
     def __init__(self):
         super(MainFrame, self).__init__()
@@ -62,7 +62,7 @@ class MainFrame(QWidget, DragAlg):
         self.navBar.setGeometry(QRect(0, self.setInt(width, 0.15), self.setInt(width, 0.15), height - self.setInt(width, 0.3)))
         self.logo_bottom.setGeometry(QRect(0, height - self.setInt(width, 0.15), self.setInt(width, 0.15), self.setInt(width, 0.15)))
         self.MenuBar.setGeometry(QRect(self.setInt(width, 0.15), 0, self.setInt(width, 0.85) + 1, self.setInt(height, 0.05)))
-        self.browserFrame.setGeometry(QRect(self.setInt(width, 0.15), self.setInt(height, 0.06), self.setInt(width, 0.85) + 1, self.setInt(height, 0.94)))
+        self.browserFrame.setGeometry(QRect(self.setInt(width, 0.15), self.setInt(height, 0.06), self.setInt(width, 0.85) + 1, self.setInt(height, 0.94)+1))
 
     def setInt(self, length, ratio):
         return int(length * ratio)

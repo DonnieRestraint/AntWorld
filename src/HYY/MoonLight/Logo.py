@@ -1,7 +1,6 @@
 import math
 import time
 import datetime
-
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtCore import QRect, QRectF, Qt, QPoint, QSize
 from PyQt5.QtGui import QPainter, QBrush, QColor
@@ -30,12 +29,11 @@ class LogoWidgetDown(QWidget):
         pixmap = Pixmap(":/images/moon.png")
         self.label.setPixmap(pixmap)
         self.label.setScaledContents(True)
-        self.label.setPixmap(pixmap)
         scale = 0.5
-        self.label.setGeometry(self.width() / 2 * (1 - scale),
-                               self.height() / 2 * (1 - scale),
-                               self.width() * scale,
-                               self.height() * scale
+        self.label.setGeometry(self.width() / 2 * (1 - scale)-1,
+                               self.height() / 2 * (1 - scale)-1,
+                               self.width() * scale+1,
+                               self.height() * scale+1
                                )
         # 整体填充背景色
         bg_circle = LogoWidgetUp.get_scale(self.rect(), 1.5)
@@ -66,14 +64,6 @@ class LogoWidgetUp(QWidget):
         painter.begin(self)
         self.DrawMoon(painter, brush, self.rect())
         painter.end()
-
-    def enterEvent(self, a0: QtCore.QEvent) -> None:
-        self.sun_light_color = self.bg_color[:-1] + (0,)
-        self.update()
-
-    def leaveEvent(self, a0: QtCore.QEvent) -> None:
-        self.sun_light_color = self.bg_color[:-1] + (255,)
-        self.update()
 
     def DrawMoon(self, painter: QPainter, brush: QBrush, area: (QRect, QRectF)):
         # 绘制区域, 起始的角度, 结束的角度
