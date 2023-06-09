@@ -3,8 +3,8 @@ import sys
 
 # from PyQt5.QtWidgets import QWidget, QHBoxLayout, QPushButton, QTableWidget, QVBoxLayout, QHeaderView, QTableWidgetItem, \
 #     QApplication, QMenu
-from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QShortcut
+from PyQt5.QtGui import QKeySequence, QFont
+from PyQt5.QtWidgets import QShortcut, QLabel
 
 from AppAlg.Solve import Solve
 from AppStyle.StyleLoader import Loader
@@ -105,9 +105,10 @@ class YYQWidget(QtWidgets.QWidget):
         self.runButton.setCheckable(True)
         self.runButton.setObjectName("runButton")
 
-        self.tipLabel = QtWidgets.QLabel(self)
-        self.tipLabel.setText("...")
-        Loader.attrAttach(self.tipLabel)
+        self.tipLabel = QLabel(self)
+        self.tipLabel.setObjectName("tipLabel")
+        self.tipLabel.setText("......")
+        # Loader.attrAttach(self.tipLabel)
 
     def handle_data(self, args):
         salts = args[2]

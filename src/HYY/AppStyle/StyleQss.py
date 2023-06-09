@@ -10,6 +10,9 @@ QWidget#title_widget {
 QPushButton#minimize_btn {
     border-image: url(:/images/minimize.png) no-repeat 0px 0px;
 }
+QPushButton#settingWidget {
+    border-image: url(:/images/setting.png) no-repeat 0px 0px;
+}
 QPushButton#close_btn {
     border-image: url(:/images/close.png) no-repeat 0px 0px;
 }
@@ -158,6 +161,11 @@ QPushButton#runButton{
     font-size: 14px;
     font-weight: %(font_bold)s;
     font-family:%(font_family)s;
+}
+QWidget#tipLabel{
+    font-size: 20px;
+    font-weight: 400;
+    font-family: monospace;
 }
 """
 from PyQt5.QtGui import QFont

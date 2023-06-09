@@ -26,6 +26,7 @@ class MainFrame(QMainWindow, DragAlg):
     def __init__(self):
         super(MainFrame, self).__init__()
         self.setObjectName("MainFrame")
+        self.defaultWindowFlags = self.windowFlags()
         # 设置标题栏的icon
         self.setWindowIcon(Icon(Pixmap(":/images/moon.png")))
         self.setWindowTitle("一月寒")
@@ -101,6 +102,14 @@ class MainFrame(QMainWindow, DragAlg):
                 DragAlg.mouseReleaseEvent(self, event)
         # 返回false，表示其余事件交还给目标对象处理，本例应返回false, True表示不再进一步处理
         return False
+
+    def restoreFlags(self):
+        """默认窗口状态的恢复，需要先保存默认窗口状态"""
+        isVisible = self.isVisible()
+        self.setWindowFlags(self.defaultWindowFlags)    # 状态变化会隐藏窗口
+        self.MenuBar.hide()
+        if isVisible:
+            self.setVisible(True)
 
 
 if __name__ == '__main__':
