@@ -1,24 +1,20 @@
-import math
-import time
-import datetime
-from PyQt5 import QtGui, QtCore
-from PyQt5.QtCore import QRect, QRectF, Qt, QPoint, QSize
-from PyQt5.QtGui import QPainter, QBrush, QColor
-from PyQt5.QtWidgets import QWidget
-from AppStyle.StyleLoader import Loader
-from AppStyle.StyleQss import StyleQss
-from Dandelion import PushButton, Label, Pixmap
+from PyQt5 import QtGui
+from PyQt5.QtCore import QRect, QRectF
+from PyQt5.QtGui import QPainter, QBrush, QColor, QPixmap
+from PyQt5.QtWidgets import QWidget, QLabel
+from MoonLight.StyleLoader import Loader
+from Resource import resource_qrc
 
 
 class LogoWidgetDown(QWidget):
 
     def __init__(self, parent=None):
         super(LogoWidgetDown, self).__init__(parent)
-        self.label = Label(self)
+        self.label = QLabel(self)
         self.setObjectName("LogoBWidget")
-        self.bg_color = StyleQss.nav_color
+        self.bg_color = (57, 55, 57, 255)
         self.one_degree = 16
-
+        Loader.passQss(self)
         Loader.attrAttach(self)
         Loader.boundAttach(self)
 
@@ -26,7 +22,7 @@ class LogoWidgetDown(QWidget):
         super(LogoWidgetDown, self).paintEvent(a0)
         painter = QPainter()
         painter.begin(self)
-        pixmap = Pixmap(":/images/moon.png")
+        pixmap = QPixmap(":/images/moon.png")
         self.label.setPixmap(pixmap)
         self.label.setScaledContents(True)
         scale = 0.5
@@ -48,10 +44,11 @@ class LogoWidgetUp(QWidget):
     def __init__(self, parent=None):
         super(LogoWidgetUp, self).__init__(parent)
         self.setObjectName("LogoWidget")
-        self.bg_color = StyleQss.nav_color
-        self.moon_light_color = StyleQss.moon_light_color
-        self.sun_light_color = StyleQss.nav_color
+        self.moon_light_color = (255, 255, 204, 200)
+        self.bg_color = (57, 55, 57, 255)
+        self.sun_light_color = self.bg_color
         self.one_degree = 16
+        Loader.passQss(self)
         Loader.attrAttach(self)
 
     def paintEvent(self, a0: QtGui.QPaintEvent) -> None:

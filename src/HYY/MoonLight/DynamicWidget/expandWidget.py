@@ -10,22 +10,26 @@ NavBar 左边导航按钮和logo
 
 InfoBox 右上基本信息展示，右下状态信息展示
 """
-from PyQt5 import QtGui
-from PyQt5.QtWidgets import QWidget, QStackedWidget, QVBoxLayout, QPushButton, QHBoxLayout, QLabel, QGridLayout, \
-    QApplication, QLineEdit, QFrame
+from PyQt5.QtWidgets import QWidget, QStackedWidget, QVBoxLayout, QApplication
 
-from AppStyle.StyleLoader import Loader
-import Resource.resource_qrc
-from AppStyle.StyleQss import StyleQss
-from MoonLight.SubPages.YYQDetails import YYQWidget
+from MoonLight.StyleLoader import Loader
+from MoonLight.DynamicWidget.yyhPage import YYQWidget
 
 
 class BrowserWidget(QWidget):
+    objectStyle = """
+        QStackedWidget#TaskStackedWidget{
+            margin:0px;
+            padding:0px;
+            background: rgba(215,200,200,0);
+        }
+        """
 
     def __init__(self, parent=None):
         super(BrowserWidget, self).__init__(parent)
         self.setObjectName("BrowserWidget")
         self.root_parent = parent
+        Loader.passQss(self)
         self.initLayout()
 
     def initLayout(self):

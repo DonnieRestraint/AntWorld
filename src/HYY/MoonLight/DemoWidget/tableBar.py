@@ -1,16 +1,32 @@
-from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QPushButton
 from PyQt5 import QtGui
-from AppStyle.StyleLoader import Loader
-from AppStyle.StyleQss import StyleQss
+from MoonLight.StyleLoader import Loader
 
 
-class NavSubWidget(QWidget):
+class TableNavWidget(QWidget):
+    objectStyle = """
+        QPushButton#NavSubPushButton{
+            padding:0px;
+            margin:0px;
+            background-color: rgba%(white)s;
+            color:rgba(143,143,143,%(opacity)s);
+        
+            border: 0px solid white;
+            border-radius:0px;
+        
+            font-size: 14px;
+            font-weight: %(font_bold)s;
+            font-family:%(font_family)s;
+        }
+        QPushButton#NavSubPushButton:focus {
+            border-bottom: 2px solid rgba(0,255,255,%(opacity)s);
+        }
+        """
 
     def __init__(self, parent=None):
-        super(NavSubWidget, self).__init__(parent)
+        super(TableNavWidget, self).__init__(parent)
         self.setNavBar("Debug")
-        self.setStyleSheet(StyleQss.get_qss())
+        Loader.passQss(self)
         Loader.attrAttach(self)
 
     def setNavBar(self, nav_bar: dict):
@@ -40,6 +56,6 @@ if __name__ == '__main__':
     from PyQt5 import QtGui
     from PyQt5.QtWidgets import QWidget, QApplication
     app = QApplication(sys.argv)
-    frame = NavSubWidget(None)
+    frame = TableNavWidget(None)
     frame.show()
     sys.exit(app.exec())

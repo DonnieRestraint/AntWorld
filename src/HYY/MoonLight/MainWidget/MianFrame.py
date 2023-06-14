@@ -1,36 +1,31 @@
-import sys
 from PyQt5 import QtGui
-from PyQt5.QtCore import QSize, Qt, QRectF, QRect, QEvent, pyqtSignal
-from PyQt5.QtWidgets import QWidget, QApplication, QMainWindow
+from PyQt5.QtCore import QSize, QRect, QEvent
+from PyQt5.QtWidgets import QApplication, QMainWindow
 
-from AppAlg.Move import DragAlg
-from AppStyle.StyleLoader import Loader
-from AppStyle.StyleQss import StyleQss
-from Dandelion import Icon, Pixmap
-from MoonLight.DisplayBox import BrowserWidget
-from MoonLight.Logo import LogoWidgetUp, LogoWidgetDown
-from MoonLight.NavBar import NavWidget
-from MoonLight.MenuBar import TitleWidget
-from PyQt5.QtGui import QMouseEvent
-import Resource.resource_qrc
-from AppStyle.StyleQss import StyleQss
-import cgitb
-
-DEBUG = True
-
-cgitb.enable(format='text') if DEBUG else ...
+from AppAlgorithm.Move import DragAlg
+from MoonLight.StyleLoader import Loader
+from MoonLight.DynamicWidget.expandWidget import BrowserWidget
+from MoonLight.LogoWidget.logo import LogoWidgetUp, LogoWidgetDown
+from MoonLight.NavWidget.navBar import NavWidget
+from MoonLight.SettingWidget.menuWidget import TitleWidget
+from PyQt5.QtGui import QPixmap, QIcon
+from Resource import resource_qrc
 
 
 class MainFrame(QMainWindow, DragAlg):
+    objectStyle = """
+        QMainWindow#MainFrame{
+            border-image: url(:/images/bg001.png) no-repeat 0px 0px;
+        }"""
 
     def __init__(self):
         super(MainFrame, self).__init__()
         self.setObjectName("MainFrame")
         self.defaultWindowFlags = self.windowFlags()
+        Loader.passQss(self)
         # 设置标题栏的icon
-        self.setWindowIcon(Icon(Pixmap(":/images/moon.png")))
+        self.setWindowIcon(QIcon(QPixmap(":/images/moon.png")))
         self.setWindowTitle("一月寒")
-        self.setStyleSheet(StyleQss.get_qss())
         self.setSize()
         # Loader.attrAttach(self)
         # Loader.boundAttach(self)
@@ -41,9 +36,8 @@ class MainFrame(QMainWindow, DragAlg):
     def setSize(self, size=None):
         if not size:
             desktop = QApplication.desktop()
-            # PyQt5.QtCore.QSize(1920, 1080)
+            # PyQt5.QtCore.QSize(1920, 1080) - > 1152 648
             width, height = int(desktop.width() * 0.6), int(desktop.height() * 0.6)
-            print(width, height)
             self.setFixedSize(QSize(width, height))
         else:
             self.setSize(*size)
@@ -112,8 +106,3 @@ class MainFrame(QMainWindow, DragAlg):
             self.setVisible(True)
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    frame = MainFrame()
-    frame.show()
-    sys.exit(app.exec())

@@ -1,11 +1,11 @@
 from PyQt5.Qt import *
+from datetime import datetime, time
 
 
 class DateTimeEdit(QDateTimeEdit):
     setStyle = """
     QDateTimeEdit#anchorTime{
         background-color: rgb(67, 60, 58, 255);
-
         border: 2px solid rgba(67, 60, 58, 255);
         border-radius:0px;
         font-size: 18px;
@@ -20,6 +20,7 @@ class DateTimeEdit(QDateTimeEdit):
     def __init__(self, parent=None, datetime=QDateTime.currentDateTime()):
         super().__init__(datetime, parent=parent)  # 设置控件(大小、位置、样式...)
         self.setObjectName("anchorTime")
+        self.anchorTime = ("Timer", "anchorTime", "")
         self.setDisplayFormat("yyyy-MM-dd HH:mm:ss")
         self.setStyleSheet(self.setStyle)
         # 设置最小日期
@@ -45,9 +46,6 @@ class DateTimeEdit(QDateTimeEdit):
     def onTimeChanged(self, time):
         print("onTimeChanged",time)
 
-    def onBeSure(self):
-        print("read go")
-
     def onEditingFinished(self):
         dateTime = self.dateTime()
         # 最大日期
@@ -70,6 +68,12 @@ class DateTimeEdit(QDateTimeEdit):
         print('minDate=%s' % str(minDate))
         print('minDateTime=%s' % str(minDateTime))
         print('minTime=%s' % str(minTime))
+
+    def on_BeSure_clicked(self, e):
+        date_time = self.dateTime()
+        time_ = self.time()
+        time_.toString()
+        date_time.toString()
 
 
 if __name__ == '__main__':

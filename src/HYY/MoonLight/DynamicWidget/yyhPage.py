@@ -1,22 +1,25 @@
 import math
-import sys
-
-# from PyQt5.QtWidgets import QWidget, QHBoxLayout, QPushButton, QTableWidget, QVBoxLayout, QHeaderView, QTableWidgetItem, \
-#     QApplication, QMenu
-from PyQt5.QtGui import QKeySequence, QFont
+from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QShortcut, QLabel
 
-from AppAlg.Solve import Solve
-from AppStyle.StyleLoader import Loader
-from AppStyle.StyleQss import StyleQss
+from AppAlgorithm.Solve import Solve
+from MoonLight.StyleLoader import Loader
 
 from PyQt5 import QtGui, QtWidgets, QtCore
-from PyQt5.QtCore import QSize, Qt, pyqtSignal
-from Dandelion.LineEdit import LineEdit
+from PyQt5.QtCore import Qt, pyqtSignal
+from MoonLight.BaseWidgets.LineEdit import LineEdit
 import os
 
 
 class YTableWidget(QtWidgets.QTableWidget):
+    objectStyle = """
+        QTableWidget#TaskTableWidget{
+            border:0px;
+            margin:0px;
+            padding:0px;
+            background:rgba(255, 255, 255, 255);
+        }
+        """
 
     def __init__(self, parent=None):
         super(YTableWidget, self).__init__(parent)
@@ -25,6 +28,7 @@ class YTableWidget(QtWidgets.QTableWidget):
         self.setContextMenuPolicy(Qt.CustomContextMenu)
         # 将右键菜单绑定到槽函数generateMenu
         self.customContextMenuRequested.connect(self.generateMenu)
+        Loader.passQss(self)
 
     def generateMenu(self, pos):
         row_num = -1
@@ -44,7 +48,6 @@ class YTableWidget(QtWidgets.QTableWidget):
             return
         else:
             print(data)
-        import random
         # count = random.choice(list(range(30)))
         # data = [[(i, j) for j in range(3)] for i in range(count)]
         rows, cols = len(data), 3
@@ -67,14 +70,60 @@ class YTableWidget(QtWidgets.QTableWidget):
 
 class YYQWidget(QtWidgets.QWidget):
     dataSignal = pyqtSignal(object)
+    style = """
+            QLineEdit#filePath {
+                padding:0px;
+                margin:5px 5px 5px 5px;
+            
+                background-color: rgba%(white)s;
+                color:rgba(143,143,143,255);
+            
+                border: 0px solid grey;
+                border-radius:0px;
+            
+                font-size: 14px;
+                font-weight: %(font_bold)s;
+                font-family:%(font_family)s;
+            }
+            QLineEdit#saltInput {
+                padding:0px;
+                margin:5px 5px 5px 5px;
+            
+                background-color: rgba%(white)s;
+                color:rgba(143,143,143,255);
+            
+                border: 0px solid grey;
+                border-radius:0px;
+                font-size: 14px;
+                font-weight: %(font_bold)s;
+                font-family:%(font_family)s;
+            }
+            QPushButton#runButton{
+                padding:0px;
+                margin:5px 5px 5px 5px;
+                background-color: rgba%(white)s;
+                color:rgba(143,143,143,255);
+            
+                border: 0px solid grey;
+                border-radius:5px;
+            
+                font-size: 14px;
+                font-weight: %(font_bold)s;
+                font-family:%(font_family)s;
+            }
+            QWidget#tipLabel{
+                font-size: 20px;
+                font-weight: 400;
+                font-family: monospace;
+            }
+            """
 
     def __init__(self, parent=None):
         super(YYQWidget, self).__init__(parent)
         self.pro_yyh = "YYH_"
         # 隐藏窗口
         self.root_parent = parent
-        self.setStyleSheet(StyleQss.get_qss())
-
+        Loader.passQss(self)
         self.setTaskPushButton()
 
     def setTaskPushButton(self):

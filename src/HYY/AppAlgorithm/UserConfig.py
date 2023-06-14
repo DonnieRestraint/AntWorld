@@ -132,4 +132,5 @@ class UserConfig(object):
 if __name__ == '__main__':
     uc = UserConfig()
     config = uc.read_config()
+    uc.write(key={"asswd": str(1123)})
     uc.check_config(config)
