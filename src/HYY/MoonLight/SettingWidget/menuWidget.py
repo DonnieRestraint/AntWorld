@@ -112,7 +112,7 @@ class TitleWidget(QWidget):
 
         self.title_label = QLabel(self.title_widget)
         self.title_label.setObjectName("title_text")
-        self.title_label.setText("这是一个title!")
+        self.title_label.setText("One Month Seven")
 
         self.mini_button = QPushButton(self.title_widget)
         self.mini_button.setObjectName("minimize_btn")

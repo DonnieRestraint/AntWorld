@@ -2,14 +2,14 @@ from PIL import Image, ImageDraw, ImageFont
 
 img = Image.new("RGBA", (32, 32), (0, 0, 0, 0))
 Draw = ImageDraw.Draw(img)
-Draw.line((10, 10, 21, 21), fill="black", width=1)
-Draw.line((10, 11, 20, 21), fill="black", width=1)
-Draw.line((11, 10, 21, 20), fill="black", width=1)
+Draw.line((10, 10, 21, 21), fill="#766555", width=1)
+Draw.line((10, 11, 20, 21), fill="#766555", width=1)
+Draw.line((11, 10, 21, 20), fill="#766555", width=1)
 
-Draw.line((10, 21, 21, 10), fill="black", width=1)
-Draw.line((10, 20, 20, 10), fill="black", width=1)
-Draw.line((11, 21, 21, 11), fill="black", width=1)
-img.save("close.png")
+Draw.line((10, 21, 21, 10), fill="#766555", width=1)
+Draw.line((10, 20, 20, 10), fill="#766555", width=1)
+Draw.line((11, 21, 21, 11), fill="#766555", width=1)
+img.save("set_close.png")
 
 img = Image.new("RGBA", (32, 32), (0, 0, 0, 0))
 Draw = ImageDraw.Draw(img)
@@ -34,4 +34,4 @@ def filter_color(file_path, color_step=1):
     new_file.save("cover_" + str(color_step) + "_" + file_path)
 
 
-filter_color("settings.png", 2)
+# filter_color("settings.png", 2)

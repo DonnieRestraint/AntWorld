@@ -4,6 +4,7 @@
       <file>images/setting.png</file>
     <file>images/moon.png</file>
     <file>images/close.png</file>
+    <file>images/set_close.png</file>
     <file>images/minimize.png</file>
   </qresource>
 </RCC>

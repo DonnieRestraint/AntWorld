@@ -56,7 +56,7 @@ class SettingWidget(QWidget):
             color:rgba(118, 101, 85, 255);
         }
         QPushButton#close_btn {
-            border-image: url(:/images/close.png) no-repeat 0px 0px;
+            border-image: url(:/images/set_close.png) no-repeat 0px 0px;
         }
         """
     name_dict = {
@@ -123,10 +123,10 @@ class SettingWidget(QWidget):
                 self.set_right_layout(info_dict)
 
     def set_right_layout(self, info_dict):
-        widget = QWidget(self.rightWidget)
+        widget = QWidget(self.rightScroll)
         h_layout = QHBoxLayout()
-        h_layout.setContentsMargins(20, 20, 20, 0)
-        Loader.spaceAttach(h_layout, interval=20)
+        h_layout.setContentsMargins(40, 20, 20, 0)
+        Loader.spaceAttach(h_layout, interval=30)
         widget.setLayout(h_layout)
 
         text = info_dict.get("name", "")
@@ -135,16 +135,16 @@ class SettingWidget(QWidget):
             label = QLabel(text, widget)
             label.setObjectName("labelText")
             if not type_edit:
-                h_layout.addWidget(label, 1, Qt.AlignHCenter)
+                h_layout.addWidget(label, 0, Qt.AlignHCenter)
             else:
-                h_layout.addWidget(label, 1, Qt.AlignRight)
+                h_layout.addWidget(label, 0, Qt.AlignHCenter)
         if type_edit:
             edit = type_edit(widget)
-            h_layout.addWidget(edit, 1, Qt.AlignLeft)
+            h_layout.addWidget(edit, 0, Qt.AlignHCenter)
             btn = QPushButton("BeSure", widget)
             btn.clicked.connect(edit.on_BeSure_clicked)
             btn.setObjectName("onBeSure")
-            h_layout.addWidget(btn, 1, Qt.AlignHCenter)
+            h_layout.addWidget(btn, 0, Qt.AlignHCenter)
 
         self.rightLayout.addWidget(widget)
 
