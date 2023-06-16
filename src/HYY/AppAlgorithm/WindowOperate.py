@@ -1,8 +1,9 @@
 import os
 import re
-import importlib
-ProcessManager = importlib.import_module('ProcessManager')
-ProcessManage = ProcessManager.ProcessManage
+# import importlib
+# ProcessManager = importlib.import_module('ProcessManager')
+# ProcessManage = ProcessManager.ProcessManage
+from .ProcessManager import ProcessManage
 
 
 class HYOperate(object):

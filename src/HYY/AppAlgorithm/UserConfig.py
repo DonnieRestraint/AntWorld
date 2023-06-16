@@ -9,10 +9,10 @@ import pytz
 class UserConfig(object):
     def __init__(self):
         self.home_path = os.path.expanduser('~')
-        self.config_name = "hpet.ini"
+        self.config_name = "yyq.ini"
         self.config_path = os.path.join(self.home_path, self.config_name)
         self.code = "utf-8"
-        print(self.config_path)
+        # print(self.config_path)
 
     def read_config(self):
         if self.config_name in os.listdir(self.home_path):
@@ -43,12 +43,12 @@ class UserConfig(object):
 
     def check_config(self, config):
         section_option_val = {}
-        # 以列表形式返回所有的section
+        # 以列表形式返回所有的节点 section
         sections = config.sections()
-        print(sections)
+        # print(sections)
         for section in sections:
             section_option_val[section] = {}
-            # 得到指定section的所有option
+            # 得到指定section的所有选项 option
             options = config.options(section)
             for option in options:
                 section_option_val[section][option] = ''

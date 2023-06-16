@@ -1,8 +1,12 @@
 import math
+from datetime import datetime
+
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt, QLineF, QRect, QPointF, QSize, QMetaObject, pyqtSlot
 from PyQt5.QtGui import QPainter, QBrush, QPen
 
+from AppAlgorithm.WindowOperate import HYOperate
+from MoonLight.BaseWidgets.TimeCycle import DateTimeEdit
 from MoonLight.SettingWidget.settingFrame import SettingWidget
 from MoonLight.StyleLoader import Loader
 from MoonLight.LogoWidget.logo import LogoWidgetUp
@@ -138,11 +142,28 @@ class TitleWidget(QWidget):
         setObjectName：设置的对象名settingWidget
         内置信号：clicked
         """
-        self.sw = SettingWidget()
-        self.sw.setGeometry(self.parent().pos().x() + int(self.parent().size().width() / 2)-300,
-                            self.parent().pos().y() + int(self.parent().size().height() / 2)-200,
-                            600,
-                            400)
+        self.sw = SettingWidget(self.parent())
+        self.sw.setGeometry(int(self.parent().size().width() / 2) - 300, int(self.parent().size().height() / 2) - 200,
+                            650, 400)
+
+    def exe_win_cmd(self):
+        str_datetime = DateTimeEdit.get_anchorTime(DateTimeEdit)
+        if not str_datetime:
+            return
+        record_datetime = datetime.strptime(str_datetime, DateTimeEdit.dt_strftime)
+        record_time = record_datetime - datetime(year=record_datetime.year, month=record_datetime.month, day=record_datetime.day)
+        cur_datetime = datetime.now()
+        cur_time = cur_datetime - datetime(year=cur_datetime.year, month=cur_datetime.month, day=cur_datetime.day)
+        cr_timeout = (cur_time - record_time).seconds
+        rc_timeout = (record_time - cur_time).seconds
+        one_minute = 60
+        if rc_timeout < one_minute:
+            self.title_label.setText(str(rc_timeout))
+        if cr_timeout > 60:
+            return
+        else:
+            hy = HYOperate()
+            hy.close_windows()
 
 
 if __name__ == '__main__':

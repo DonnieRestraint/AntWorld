@@ -31,10 +31,10 @@ class SettingWidget(QWidget):
             margin:0px;
             border-radius: 0px;
             border: 0px solid rgba(255,255,255,0);
-            background-color:rgba(255,255,255,0);
+            background-color:rgba(53, 47, 45, 255);
         }
         QWidget#rightWidget{
-            background-color:rgba(255, 255, 255, 0);
+            background-color:rgba(53, 47, 45, 0);
         }
         QWidget#leftWidget{
             background-color:rgba(60, 56, 57, 255);
@@ -52,7 +52,7 @@ class SettingWidget(QWidget):
             font-family:monospace;
         }
         QPushButton#onBeSure{
-            background-color:rgba(67, 60, 58);
+            background-color:rgba(67, 60, 58, 255);
             color:rgba(118, 101, 85, 255);
         }
         QPushButton#close_btn {
@@ -124,7 +124,6 @@ class SettingWidget(QWidget):
 
     def set_right_layout(self, info_dict):
         widget = QWidget(self.rightWidget)
-        Loader.attrAttach(widget)
         h_layout = QHBoxLayout()
         h_layout.setContentsMargins(20, 20, 20, 0)
         Loader.spaceAttach(h_layout, interval=20)
@@ -157,20 +156,19 @@ class SettingWidget(QWidget):
 
     def paintEvent(self, a0: QtGui.QPaintEvent) -> None:
         width, height = self.width(), self.height()
+        print(width, width*0.25, width*0.75)
         self.leftWidget.setGeometry(0, 0, int(width * 0.25), height)
         for i in range(self.left_layout.count()):
             widget = self.left_layout.itemAt(i).widget()
             if isinstance(widget, QPushButton):
                 widget.setFixedHeight(40)
         self.rightScroll.setGeometry(int(width * 0.25), 0, width - int(width * 0.25), height)
-        self.close_button.setGeometry(width - 180, 0, 30, 30)
-        print(width, height)
+        self.close_button.setGeometry(self.rightScroll.width() - 30, 0, 30, 30)
 
-    def __init__(self):
-        super(SettingWidget, self).__init__()
+    def __init__(self, parent=None):
+        super(SettingWidget, self).__init__(parent)
         self.setObjectName("settingWidget")
         Loader.passQss(self)
-        Loader.flagDetach(self)
         Loader.flagDetach(self)
         Loader.boundAttach(self)
         self.setWindowModality(Qt.ApplicationModal)

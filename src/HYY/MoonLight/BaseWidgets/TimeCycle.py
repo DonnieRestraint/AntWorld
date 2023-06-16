@@ -1,6 +1,8 @@
 from PyQt5.Qt import *
 from datetime import datetime, time
 
+from AppAlgorithm.UserConfig import UserConfig
+
 
 class DateTimeEdit(QDateTimeEdit):
     setStyle = """
@@ -17,11 +19,23 @@ class DateTimeEdit(QDateTimeEdit):
     }
     """
 
-    def __init__(self, parent=None, datetime=QDateTime.currentDateTime()):
-        super().__init__(datetime, parent=parent)  # 设置控件(大小、位置、样式...)
+    timer_name = "Timer"
+    timer_sub_name = "anchor_time"
+    dt_strftime = "%Y-%m-%d %H:%M:%S"
+    qt_strftime = "yyyy-MM-dd HH:mm:ss"
+
+    def __init__(self, parent=None):
+        anchor_time = self.get_anchorTime()
+        if not anchor_time:
+            qt_datetime = QDateTime.currentDateTime()
+        else:
+            qt_datetime = QDateTime(datetime.strptime(anchor_time, self.dt_strftime))
+
+        super().__init__(qt_datetime, parent=parent)  # 设置控件(大小、位置、样式...)
         self.setObjectName("anchorTime")
-        self.anchorTime = ("Timer", "anchorTime", "")
-        self.setDisplayFormat("yyyy-MM-dd HH:mm:ss")
+
+        self.current_datetime = datetime.strftime(qt_datetime.toPyDateTime(), self.dt_strftime)
+        self.setDisplayFormat(self.qt_strftime)
         self.setStyleSheet(self.setStyle)
         # 设置最小日期
         # self.setMinimumDate(QDate.currentDate().addDays(-365))
@@ -35,45 +49,36 @@ class DateTimeEdit(QDateTimeEdit):
         self.timeChanged.connect(self.onTimeChanged)
         # self.editingFinished.connect(self.onEditingFinished)
 
-    def onDateChanged(self, date):
+    def onDateChanged(self, qt_date):
         # 无论日期还是时间发生改变，都会执行
-        print("onDateChanged", date)
+        # print("onDateChanged", qt_date)
+        ...
 
-    def onDateTimeChanged(self, dateTime):
+    def onDateTimeChanged(self, qt_datetime):
         # 时间发生改变时执行
-        print("onDateTimeChanged",dateTime)
+        self.current_datetime = datetime.strftime(qt_datetime.toPyDateTime(), self.dt_strftime)
+        # print("onDateTimeChanged", qt_datetime)
 
-    def onTimeChanged(self, time):
-        print("onTimeChanged",time)
+    def onTimeChanged(self, qt_time):
+        # print("onTimeChanged", qt_time)
+        ...
 
-    def onEditingFinished(self):
-        dateTime = self.dateTime()
-        # 最大日期
-        maxDate = self.maximumDate()
-        # 最大日期时间
-        maxDateTime = self.maximumDateTime()
-        # 最大时间
-        maxTime = self.maximumTime()
-        # 最小日期
-        minDate = self.minimumDate()
-        # 最小日期时间
-        minDateTime = self.minimumDateTime()
-        # 最小时间
-        minTime = self.minimumTime()
-        print('\n选择日期时间')
-        print('dateTime=%s' % str(dateTime))
-        print('maxDate=%s' % str(maxDate))
-        print('maxDateTime=%s' % str(maxDateTime))
-        print('maxTime=%s' % str(maxTime))
-        print('minDate=%s' % str(minDate))
-        print('minDateTime=%s' % str(minDateTime))
-        print('minTime=%s' % str(minTime))
+    def get_anchorTime(self):
+        uc = UserConfig()
+        config = uc.read_config()
+        if not config:
+            return 
+        for section in config.sections():
+            options = config.options(section)
+            for option in options:
+                if section == self.timer_name and option == self.timer_sub_name:
+                    return config.get(section, option)
 
     def on_BeSure_clicked(self, e):
-        date_time = self.dateTime()
-        time_ = self.time()
-        time_.toString()
-        date_time.toString()
+        uc = UserConfig()
+        uc.write(Timer={self.timer_sub_name: self.current_datetime})
+        # config = uc.read_config()
+        # uc.check_config(config)
 
 
 if __name__ == '__main__':

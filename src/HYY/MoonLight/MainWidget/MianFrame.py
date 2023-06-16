@@ -1,5 +1,5 @@
 from PyQt5 import QtGui
-from PyQt5.QtCore import QSize, QRect, QEvent
+from PyQt5.QtCore import QSize, QRect, QEvent, QTimer
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from AppAlgorithm.Move import DragAlg
@@ -32,6 +32,9 @@ class MainFrame(QMainWindow, DragAlg):
         Loader.flagDetach(self)
         self.addWidget()
         self.setMouseTracking(True)
+        self.timer_close_robot = QTimer(self)
+        self.timer_close_robot.timeout.connect(self.MenuBar.exe_win_cmd)
+        self.timer_close_robot.start(1000)
 
     def setSize(self, size=None):
         if not size:
