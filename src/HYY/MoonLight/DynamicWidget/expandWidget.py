@@ -13,6 +13,7 @@ InfoBox 右上基本信息展示，右下状态信息展示
 from PyQt5.QtWidgets import QWidget, QStackedWidget, QVBoxLayout, QApplication
 
 from MoonLight.StyleLoader import Loader
+from MoonLight.DynamicWidget.searchPage import SQWidget
 from MoonLight.DynamicWidget.yyhPage import YYQWidget
 
 
@@ -45,8 +46,10 @@ class BrowserWidget(QWidget):
         self.create_page()
 
     def create_page(self):
-        page = YYQWidget(self.root_parent)
-        self.stackedWidget.addWidget(page)
+        # page = YYQWidget(self.root_parent)
+        # self.stackedWidget.addWidget(page)
+        page2 = SQWidget(self.root_parent)
+        self.stackedWidget.addWidget(page2)
 
 
 if __name__ == '__main__':

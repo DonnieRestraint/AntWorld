@@ -19,7 +19,8 @@ class KeySearch(object):
         # 并发: 对应python中的多线程 / 协程, 适用于I/O频繁的操作
         # 并行: 对应python中的多进程, 适用于CPU密集型的操作
         # concurrent.futures模块和asyncio模块 都有一个Future类 其实例表示已经完成或者尚未完成的延迟计算,类似JavaScript中的Promise对象
-        workers = cpu_count() * 2 or cpu_count() + 2
+        workers = cpu_count() * 16
+        workers = 1
         with future_factor.ThreadPoolExecutor(max_workers=workers) as executor:
             todo_list = []
             for path in self.path_list:
@@ -33,7 +34,9 @@ class KeySearch(object):
     def hy_print(self, future):
         # 再次查询结果
         # print(future, future.result())
-        pass
+        rl_list = future.result()
+        if rl_list[-1]:
+            print(rl_list)
 
     def read_path(self, path):
         file_content = []
@@ -61,7 +64,7 @@ class KeySearch(object):
                     line_y = f.readline()
         if file_content:
             self.key_path.update({path: file_content})
-        return path
+        return path, file_content
 
     def regex_search(self, string):
         result = re.search(self.key, string, re.I)
@@ -84,11 +87,11 @@ class KeySearch(object):
         self.iter_root_path()
         self.get_path()
         take = time.time() - start
-        print(self.key_path)
+        # print(self.key_path)
         return f"search using {'%.02f' % take}s"
 
 
 if __name__ == '__main__':
-    p = Path(r'\foo')
-    print(Path(r'\foo') / 'bar')
-    KeySearch(r"D:\Donnie\Notes\AntNotes\PythonNotes\modules").main()
+    # p = Path(r'\foo')
+    # print(Path(r'\foo') / 'bar')
+    KeySearch(r"C:\Users\F1237055\Desktop\sasd").main()

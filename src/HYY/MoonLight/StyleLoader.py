@@ -18,8 +18,8 @@ class Loader(object):
         widget.setAttribute(Qt.WA_TranslucentBackground)
 
     @staticmethod
-    def boundAttach(widget: (QtWidgets.QWidget, QtWidgets.QBoxLayout)):
-        widget.setContentsMargins(0, 0, 0, 0)
+    def boundAttach(widget: (QtWidgets.QWidget, QtWidgets.QBoxLayout), interval=(0, 0, 0, 0)):
+        widget.setContentsMargins(*interval)
 
     @staticmethod
     def spaceAttach(layout: QtWidgets.QBoxLayout, interval=0):
