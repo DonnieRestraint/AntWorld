@@ -56,7 +56,7 @@ class YYQWidget(QtWidgets.QWidget):
                 font-family:%(font_family)s;
             }
             QWidget#tipLabel{
-                font-size: 20px;
+                font-size: 16px;
                 font-weight: 400;
                 font-family: monospace;
                 color:rgba(143,143,143,255);
@@ -194,12 +194,12 @@ class YYQWidget(QtWidgets.QWidget):
     def paintEvent(self, a0: QtGui.QPaintEvent) -> None:
         width, height = self.width(), self.height()
         step = 0.05
-        self.tableWidget.setGeometry(QtCore.QRect(0, 0, self.Int(width, 1), self.Int(height, 0.93)))
-        self.ontologyPath.setGeometry(QtCore.QRect(self.Int(width, step), self.Int(height, 0.932), self.Int(width, 0.2), self.Int(height, 0.07)))
-        self.appendPath.setGeometry(QtCore.QRect(self.Int(width, step*2 + 0.2), self.Int(height, 0.932), self.Int(width, 0.2), self.Int(height, 0.07)))
-        self.saltInput.setGeometry(QtCore.QRect(self.Int(width, step*3 + 0.2 * 2), self.Int(height, 0.932), self.Int(width, 0.1), self.Int(height, 0.07)))
-        self.runButton.setGeometry(QtCore.QRect(self.Int(width, step*4 + 0.2*2 + 0.1), self.Int(height, 0.932), self.Int(width, 0.04), self.Int(height, 0.07)))
-        self.tipLabel.setGeometry(QtCore.QRect(self.Int(width, step*5 + 0.2*2 + 0.1 + 0.04), self.Int(height, 0.932), self.Int(width, 0.3), self.Int(height, 0.07)))
+        self.tableWidget.setGeometry(QtCore.QRect(0, 0, self.Int(width, 1), self.Int(height, 0.87)))
+        self.ontologyPath.setGeometry(QtCore.QRect(self.Int(width, step), self.Int(height, 0.86), self.Int(width, 0.2), self.Int(height, 0.07)))
+        self.appendPath.setGeometry(QtCore.QRect(self.Int(width, step*2 + 0.2), self.Int(height, 0.86), self.Int(width, 0.2), self.Int(height, 0.07)))
+        self.saltInput.setGeometry(QtCore.QRect(self.Int(width, step*3 + 0.2 * 2), self.Int(height, 0.86), self.Int(width, 0.1), self.Int(height, 0.07)))
+        self.runButton.setGeometry(QtCore.QRect(self.Int(width, step*4 + 0.2*2 + 0.1), self.Int(height, 0.86), self.Int(width, 0.05), self.Int(height, 0.07)))
+        self.tipLabel.setGeometry(QtCore.QRect(self.Int(width, step*1.5), self.Int(height, 0.93), self.Int(width, 0.8), self.Int(height, 0.07)))
 
     def Int(self, length, ratio):
         return int(length * ratio)

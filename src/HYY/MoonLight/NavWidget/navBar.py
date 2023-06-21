@@ -42,6 +42,7 @@ class NavWidget(QWidget):
             color:rgba(118, 101, 91, 255);
         }
         """
+    item_list = ["Search", "YYH", "音频", "视频"] * 1
 
     def __init__(self, parent=None):
         super(NavWidget, self).__init__(parent)
@@ -72,12 +73,12 @@ class NavWidget(QWidget):
 
     def layout_scroll(self):
 
-        item_list = ["YYH", "视频", "音频"] * 1
+
         self.item_height = 42
         self.item_border = 0
         self.color = QColor(121, 44, 121, 255)
 
-        for filename in item_list:
+        for filename in self.item_list:
             button = QPushButton(self.topfiller)
             button.setObjectName("NavPushButton")
             # 使用父窗口的eventFilter函数进行处理
@@ -89,7 +90,11 @@ class NavWidget(QWidget):
 
     def button_click(self, e: QtCore.QEvent):
         source = self.sender()
-        print(source.text())
+        if source:
+            text = source.text()
+            i_index = self.item_list.index(text)
+            print(i_index)
+            self.parent().browserFrame.stackedWidget.setCurrentIndex(i_index)
 
     def resizeEvent(self, a0) -> None:
         super(NavWidget, self).resizeEvent(a0)

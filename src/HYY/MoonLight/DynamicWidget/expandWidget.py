@@ -46,10 +46,8 @@ class BrowserWidget(QWidget):
         self.create_page()
 
     def create_page(self):
-        # page = YYQWidget(self.root_parent)
-        # self.stackedWidget.addWidget(page)
-        page2 = SQWidget(self.root_parent)
-        self.stackedWidget.addWidget(page2)
+        self.stackedWidget.addWidget(SQWidget(self.root_parent))
+        self.stackedWidget.addWidget(YYQWidget(self.root_parent))
 
 
 if __name__ == '__main__':

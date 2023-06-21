@@ -60,12 +60,11 @@ class SettingWidget(QWidget):
         }
         """
     name_dict = {
-        "YYH": [{"name": "Daily Cycle", "type_edit": DateTimeEdit}, {"name": "AA", "type_edit": ""}],
-        "视频": [{"name": "一天天", "type_edit": ""}, {"name": "BB", "type_edit": ""}],
-        "音频": [{"name": "一月月", "type_edit": ""}, {"name": "CC", "type_edit": ""}],
-        "音频1": [{"name": "一月月", "type_edit": ""}, {"name": "CC", "type_edit": ""}],
-        "音频2": [{"name": "一月月", "type_edit": ""}, {"name": "CC", "type_edit": ""}],
-        "音频3": [{"name": "一月月", "type_edit": ""}, {"name": "CC", "type_edit": ""}],
+        "YYH1": [
+            {"name": "Daily Cycle1", "type_edit": DateTimeEdit},
+            {"name": "Daily Cycle", "type_edit": DateTimeEdit},
+         ],
+        "YYH2": [{"name": "Daily Cycle2", "type_edit": DateTimeEdit}],
     }
 
     def layoutFrame(self):
@@ -81,7 +80,7 @@ class SettingWidget(QWidget):
         self.rightScroll.setObjectName("settingScroll")
         self.rightScroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.rightScroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-
+        self.rightScroll.verticalScrollBar().valueChanged.connect(self.on_settingScroll_valueChanged)
         self.rightWidget = QWidget()
         self.rightWidget.setObjectName("rightWidget")
         self.rightLayout = QVBoxLayout()
@@ -125,7 +124,7 @@ class SettingWidget(QWidget):
     def set_right_layout(self, info_dict):
         widget = QWidget(self.rightScroll)
         h_layout = QHBoxLayout()
-        h_layout.setContentsMargins(40, 20, 20, 0)
+        h_layout.setContentsMargins(40, 20, 0, 0)  # left, up, right, low
         Loader.spaceAttach(h_layout, interval=30)
         widget.setLayout(h_layout)
 
@@ -149,19 +148,32 @@ class SettingWidget(QWidget):
         self.rightLayout.addWidget(widget)
 
     def on_settingButton_clicked(self):
+        """点击按钮移动右边滑块的值，未实现到理想效果"""
         text = self.sender().text()
         index = list(self.name_dict).index(text)
         button = self.left_layout.itemAt(index).widget()
-        print(index, text, button)
+        # print(index, text, button)
+        button_count = len(self.name_dict.keys())
+        self.rightScroll.verticalScrollBar().setValue(int(index/button_count*self.h))
+
+    def on_settingScroll_valueChanged(self, h_val):
+        """移动右边滑块改变被聚焦的按钮，未实现到理想效果"""
+        # print(self.left_layout.count(), h_val, self.h)
+        button_count = len(self.name_dict.keys())
+        for i in range(button_count):
+            if h_val / self.h > (i+1)/button_count:
+                print(h_val, (i+1)/button_count)
+                self.left_layout.itemAt(i*2).widget().setFocus()
 
     def paintEvent(self, a0: QtGui.QPaintEvent) -> None:
         width, height = self.width(), self.height()
-        print(width, width*0.25, width*0.75)
+        self.w, self.h = width, height
+        # print(width, width*0.25, width*0.75)
         self.leftWidget.setGeometry(0, 0, int(width * 0.25), height)
         for i in range(self.left_layout.count()):
             widget = self.left_layout.itemAt(i).widget()
             if isinstance(widget, QPushButton):
-                widget.setFixedHeight(40)
+                widget.setFixedHeight(self.l_button_h)
         self.rightScroll.setGeometry(int(width * 0.25), 0, width - int(width * 0.25), height)
         self.close_button.setGeometry(self.rightScroll.width() - 30, 0, 30, 30)
 
@@ -173,7 +185,10 @@ class SettingWidget(QWidget):
         Loader.boundAttach(self)
         self.setWindowModality(Qt.ApplicationModal)
         self.layoutFrame()
+        self.w = 0
+        self.h = 0
+        self.l_button_h = 40
         self.show()
-        print(self.left_layout.itemAt(2).widget().click())
-        print(self.left_layout.itemAt(2).widget().setFocus())
-
+        # self.rightLayout.itemAt(2).widget().click()
+        # self.left_layout.itemAt(2).widget().click()
+        self.left_layout.itemAt(0).widget().setFocus()

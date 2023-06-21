@@ -31,6 +31,7 @@ class YTableWidget(QtWidgets.QTableWidget):
         # 将右键菜单绑定到槽函数generateMenu
         # self.customContextMenuRequested.connect(self.generateMenu)
         self.cols = 3
+        self.overly_row = True  # 叠加
         Loader.passQss(self)
         self.setStyleSheet(self.objectStyle)
 
@@ -71,11 +72,15 @@ class YTableWidget(QtWidgets.QTableWidget):
         self.viewport().update()
 
     def update_table(self, new_data_dict):
+        """{key_str:val_list}"""
         if not new_data_dict:
             return
         else:
             print(new_data_dict)
-        data_dict, rows, columns = self.get_table_data()
+        if self.overly_row:
+            data_dict, rows, columns = self.get_table_data()
+        else:
+            data_dict, rows, columns = {}, 0, 0
         whole_rows = rows
         for k, v in new_data_dict.items():
             if v:
@@ -95,7 +100,7 @@ class YTableWidget(QtWidgets.QTableWidget):
                 data_list = data_dict[k]
                 for n_d in new_data_dict[k]:
                     cell = n_d.strip()
-                    if n_d not in data_list:
+                    if cell not in data_list:
                         data_dict[k].append(cell)
 
         self.setRowCount(whole_rows)
@@ -126,7 +131,7 @@ class YTableWidget(QtWidgets.QTableWidget):
         rows = self.rowCount()
         columns = self.columnCount()
         data_dict = collections.OrderedDict()
-        kk = ''
+        up_key = ''
         for ri in range(rows):
             row_list = []
             for ci in range(columns):
@@ -135,8 +140,10 @@ class YTableWidget(QtWidgets.QTableWidget):
                     row_list.append(item.text())
                 else:
                     row_list.append("")
-            if row_list[0] not in data_dict:
-                data_dict[row_list[0]] = row_list[1:]
+            if row_list[0] and row_list[0] not in data_dict:
+                cur_key = up_key = row_list[0]
+                data_dict[cur_key] = row_list[1:]
             else:
-                data_dict[row_list[0]].extend(row_list[1:])
+                cur_key = up_key
+                data_dict[cur_key].extend(row_list[1:])
         return data_dict, rows, columns

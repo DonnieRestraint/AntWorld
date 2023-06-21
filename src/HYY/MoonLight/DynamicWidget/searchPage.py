@@ -53,8 +53,8 @@ class SQWidget(QWidget):
             color:rgba(143,143,143,255);
         }
         QWidget#tipLabel{
-            font-size: 20px;
-            font-weight: 400;
+            font-size: 16px;
+            font-weight: 700;
             font-family: monospace;
             color:rgba(143,143,143,255);
         }
@@ -85,14 +85,15 @@ class SQWidget(QWidget):
         self.read_type.setLayout(h1_layout)
         self.read_loader_point = FileSearch.file_type
         self.read_label1 = QLabel(self.read_loader_point[0], self.read_type)
+        self.read_label1.setFixedWidth(60)
         self.read_label1.setObjectName("labelName")
         self.read_is = QRadioButton(self.read_type)
         self.read_not = QRadioButton(self.read_type)
         self.read_is.toggled.connect(lambda isChecked: self.switch_file_type(isChecked))
         self.read_is.setChecked(True)
+        h1_layout.addWidget(self.read_label1)
         h1_layout.addWidget(self.read_is)
         h1_layout.addWidget(self.read_not)
-        h1_layout.addWidget(self.read_label1)
         Loader.boundAttach(self.read_type, (50, 0, 0, 0))
         Loader.spaceAttach(h1_layout)
 
@@ -101,16 +102,34 @@ class SQWidget(QWidget):
         self.loader_type.setLayout(h2_layout)
         self.read_loader_pass = FileSearch.load_type
         self.read_label2 = QLabel(self.read_loader_pass[0], self.loader_type)
+        self.read_label2.setFixedWidth(60)
         self.read_label2.setObjectName("labelName")
         self.read_local = QRadioButton(self.loader_type)
         self.read_local.toggled.connect(lambda isChecked: self.switch_load_type(isChecked))
         self.read_local.setChecked(True)
         self.read_online = QRadioButton(self.loader_type)
+        h2_layout.addWidget(self.read_label2)
         h2_layout.addWidget(self.read_local)
         h2_layout.addWidget(self.read_online)
-        h2_layout.addWidget(self.read_label2)
         Loader.boundAttach(self.loader_type, (50, 0, 0, 0))
         Loader.spaceAttach(h2_layout)
+
+        self.clear_widget = QWidget(self)
+        h3_layout = QHBoxLayout()
+        self.clear_widget.setLayout(h3_layout)
+        self.clear_or_pass = FileSearch.Clear_or_not
+        self.read_label3 = QLabel(self.clear_or_pass[0], self.clear_widget)
+        self.read_label3.setFixedWidth(60)
+        self.read_label3.setObjectName("labelName")
+        self.overly_row = QRadioButton(self.clear_widget)
+        self.overly_row.toggled.connect(lambda isChecked: self.switch_overly_type(isChecked))
+        self.overly_row.setChecked(True)
+        self.clear_row = QRadioButton(self.clear_widget)
+        h3_layout.addWidget(self.read_label3)
+        h3_layout.addWidget(self.overly_row)
+        h3_layout.addWidget(self.clear_row)
+        Loader.boundAttach(self.clear_widget, (50, 0, 0, 0))
+        Loader.spaceAttach(h3_layout)
 
         self.tipLabel = QLabel(self)
         self.tipLabel.setObjectName("tipLabel")
@@ -124,12 +143,13 @@ class SQWidget(QWidget):
 
     def paintEvent(self, a0: QtGui.QPaintEvent) -> None:
         width, height = self.width(), self.height()
-        self.tableWidget.setGeometry(QtCore.QRect(0, 0, width, self.Int(height, 0.8)))
+        self.tableWidget.setGeometry(QtCore.QRect(1, 0, width-2, self.Int(height, 0.87)))
         self.urlPath.setGeometry(QtCore.QRect(self.Int(width, 0.05), self.Int(height, 0.86), self.Int(width, 0.6), self.Int(height, 0.07)))
         self.KeyInput.setGeometry(QtCore.QRect(self.Int(width, 0.7), self.Int(height, 0.86), self.Int(width, 0.25), self.Int(height, 0.07)))
-        self.read_type.setGeometry(QtCore.QRect(self.Int(width, 0.05), self.Int(height, 0.93), self.Int(width, 0.2), self.Int(height, 0.07)))
-        self.loader_type.setGeometry(QtCore.QRect(self.Int(width, 0.3), self.Int(height, 0.93), self.Int(width, 0.2), self.Int(height, 0.07)))
-        self.tipLabel.setGeometry(QtCore.QRect(self.Int(width, 0.6), self.Int(height, 0.93), self.Int(width, 0.3), self.Int(height, 0.07)))
+        self.read_type.setGeometry(QtCore.QRect(self.Int(width, 0.05), self.Int(height, 0.93), self.Int(width, 0.18), self.Int(height, 0.07)))
+        self.loader_type.setGeometry(QtCore.QRect(self.Int(width, 0.2), self.Int(height, 0.93), self.Int(width, 0.18), self.Int(height, 0.07)))
+        self.clear_widget.setGeometry(QtCore.QRect(self.Int(width, 0.35), self.Int(height, 0.93), self.Int(width, 0.18), self.Int(height, 0.07)))
+        self.tipLabel.setGeometry(QtCore.QRect(self.Int(width, 0.65), self.Int(height, 0.93), self.Int(width, 0.3), self.Int(height, 0.07)))
 
     def switch_file_type(self, e):
         if e:
@@ -142,6 +162,14 @@ class SQWidget(QWidget):
             self.read_label2.setText(self.read_loader_pass[0])
         else:
             self.read_label2.setText(self.read_loader_pass[1])
+
+    def switch_overly_type(self, e):
+        if e:
+            self.read_label3.setText(self.clear_or_pass[0])
+            self.tableWidget.overly_row = True
+        else:
+            self.read_label3.setText(self.clear_or_pass[1])
+            self.tableWidget.overly_row = False
 
     def OnClickedSearch(self):
         filePath = self.urlPath.text()
@@ -162,8 +190,9 @@ class SQWidget(QWidget):
 
 
 class FileSearch(QThread):
-    file_type = ("FileContent", "FileName")
+    file_type = ("Content", "Name")
     load_type = ("Offline", "Online")
+    Clear_or_not = ("Overly", "Clear")
     data_signal = pyqtSignal(object)
 
     def __init__(self, root_url, parent=None):
@@ -193,7 +222,7 @@ class FileSearch(QThread):
         # 并发: 对应python中的多线程 / 协程, 适用于I/O频繁的操作
         # 并行: 对应python中的多进程, 适用于CPU密集型的操作
         # concurrent.futures模块和asyncio模块 都有一个Future类 其实例表示已经完成或者尚未完成的延迟计算,类似JavaScript中的Promise对象
-        workers = cpu_count() * 1
+        workers = cpu_count() * 16
         with future_factor.ThreadPoolExecutor(max_workers=workers) as executor:
             task_list = self.file_path_list if self.f_load_type == self.load_type[0] else self.src_url_list
 
@@ -214,7 +243,6 @@ class FileSearch(QThread):
         pass
 
     def _get_task(self, future):
-        print(future.result())
         data = future.result()
         if data:
             self.data_queue.put(data)
@@ -282,6 +310,7 @@ class FileSearch(QThread):
                         else:
                             data_dict[k] = d
             self.data_signal.emit(data_dict)
+            self.parent.task_handle_label("find the {:d}".format(self.data_queue.qsize()))
 
     def get_url_list(self):
         pass
