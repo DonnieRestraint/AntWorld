@@ -1,4 +1,4 @@
-# HHY 装饰器（decorator）详解
+# YYH 装饰器（decorator）详解
 """
 装饰器：包过两个阶段， 函数的装饰和函数的调用
 wraps用来装饰内部函数， 使得原函数对象的属性得以保留， 如：__name__，__doc__等
@@ -8,7 +8,6 @@ wraps用来装饰内部函数， 使得原函数对象的属性得以保留， �
 有wraps(func),表示wraps装饰了内部函数对象，将func带着自身属性返回修改了内部函数的引用和属性，即相当于a,b=b,a
 """
 from functools import wraps, partial
-# hy@decorator
 
 
 # 基本形态

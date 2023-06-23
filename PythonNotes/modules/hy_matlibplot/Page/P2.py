@@ -1,3 +1,4 @@
+# yyh matplotlib的画布像素级别的操作
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Rectangle
