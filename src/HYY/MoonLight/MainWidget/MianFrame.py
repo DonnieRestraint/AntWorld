@@ -1,6 +1,6 @@
 from PyQt5 import QtGui
 from PyQt5.QtCore import QSize, QRect, QEvent, QTimer
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QSystemTrayIcon, QAction, QMenu, QMessageBox
 
 from AppAlgorithm.Move import DragAlg
 from MoonLight.StyleLoader import Loader
@@ -24,6 +24,7 @@ class MainFrame(QMainWindow, DragAlg):
         self.defaultWindowFlags = self.windowFlags()
         Loader.passQss(self)
         # 设置标题栏的icon
+        self.sysIcon = QIcon(":/images/moon.png")
         self.setWindowIcon(QIcon(QPixmap(":/images/moon.png")))
         self.setWindowTitle("一月寒")
         self.setSize()
@@ -31,6 +32,8 @@ class MainFrame(QMainWindow, DragAlg):
         # Loader.boundAttach(self)
         Loader.flagDetach(self)
         self.addWidget()
+        self.setTray()
+        self.trayIcon.show()
         self.setMouseTracking(True)
         self.timer_close_robot = QTimer(self)
         self.timer_close_robot.timeout.connect(self.MenuBar.exe_win_cmd)
@@ -44,6 +47,30 @@ class MainFrame(QMainWindow, DragAlg):
             self.setFixedSize(QSize(width, height))
         else:
             self.setSize(*size)
+
+    def setTray(self):
+        aRestore = QAction('恢复(&R)', self, triggered=self.showNormal)
+        aQuit = QAction('退出(&Q)', self, triggered=QApplication.instance().quit)
+
+        menu = QMenu(self)
+        menu.addAction(aRestore)
+        menu.addAction(aQuit)
+
+        self.trayIcon = QSystemTrayIcon(self)
+        self.trayIcon.setVisible(False)
+        self.trayIcon.setIcon(self.sysIcon)
+        self.trayIcon.setContextMenu(menu)
+        self.trayIcon.messageClicked.connect(self.messageClicked)
+        self.trayIcon.activated.connect(self.iconActivated)
+
+    def iconActivated(self, evt):
+        if evt == QSystemTrayIcon.DoubleClick:
+            self.showNormal()
+        elif evt == QSystemTrayIcon.MiddleClick:
+            pass
+
+    def messageClicked(self):
+        print("messageClicked")
 
     def addWidget(self):
         self.logo = LogoWidgetUp(self)

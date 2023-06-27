@@ -4,7 +4,7 @@ from datetime import datetime
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt, QLineF, QRect, QPointF, QSize, QMetaObject, pyqtSlot
 from PyQt5.QtGui import QPainter, QBrush, QPen
-
+from PyQt5.QtWidgets import QApplication
 from AppAlgorithm.WindowOperate import HYOperate
 from MoonLight.BaseWidgets.TimeCycle import DateTimeEdit
 from MoonLight.SettingWidget.settingFrame import SettingWidget
@@ -123,7 +123,12 @@ class TitleWidget(QWidget):
 
         self.close_button = QPushButton(self.title_widget)
         self.close_button.setObjectName("close_btn")
-        self.close_button.clicked.connect(self.parent().close if self.parent() else self.close)
+        self.close_button.clicked.connect(self.close_all)
+
+    def close_all(self):
+        if self.parent():
+            self.parent().trayIcon.setVisible(False)
+        QApplication.instance().quit()
 
     def paintEvent(self, a0: QtGui.QPaintEvent) -> None:
         width, height = self.width(), self.height()
@@ -142,9 +147,12 @@ class TitleWidget(QWidget):
         setObjectName：设置的对象名settingWidget
         内置信号：clicked
         """
+        p = self.parent()
+        width_start = p.pos().x() + int(p.width()/2)
+        height_start = p.pos().y() + int(p.height()/2)
+
         self.sw = SettingWidget(self.parent())
-        self.sw.setGeometry(int(self.parent().size().width() / 2) - 300, int(self.parent().size().height() / 2) - 200,
-                            650, 400)
+        self.sw.setGeometry(width_start - 300, height_start - 200, 650, 400)
 
     def exe_win_cmd(self):
         str_datetime = DateTimeEdit.get_anchorTime(DateTimeEdit)
@@ -164,13 +172,3 @@ class TitleWidget(QWidget):
         else:
             hy = HYOperate()
             hy.close_windows()
-
-
-if __name__ == '__main__':
-    import sys
-    from PyQt5.QtWidgets import QWidget, QApplication
-
-    app = QApplication(sys.argv)
-    frame = TitleWidget(None)
-    frame.show()
-    sys.exit(app.exec())

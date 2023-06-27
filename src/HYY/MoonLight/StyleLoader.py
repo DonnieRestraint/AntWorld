@@ -9,8 +9,8 @@ DevStyle = True
 class Loader(object):
     @staticmethod
     def flagDetach(widget: QtWidgets.QWidget):
-        # 去除窗口标志
-        widget.setWindowFlag(Qt.FramelessWindowHint)
+        # 隐藏窗口标志, 隐藏任务栏
+        widget.setWindowFlags(Qt.FramelessWindowHint | Qt.SplashScreen)
 
     @staticmethod
     def attrAttach(widget: QtWidgets.QWidget):
