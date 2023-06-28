@@ -76,6 +76,5 @@ class SqliteDb(object):
 if __name__ == '__main__':
     print("http://www.noobyard.com/article/p-ejbggzgx-c.html")
     print("https://blog.csdn.net/m0_57145438/article/details/130874157")
-    print("https://blog.csdn.net/qq_41741971/article/details/126217235")
     print("http://c.biancheng.net/view/2580.html")
 
