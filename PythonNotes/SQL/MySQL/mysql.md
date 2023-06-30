@@ -37,7 +37,8 @@ SHOW DATABASES;
 USE '数据库名';
 # 显示所有表
 SHOW TABLES;
-
+# 显示时区参数
+show variables like '%time_zone%';
 # 创建数据库
 # http://c.biancheng.net/view/2413.html
  CREATE DATABASE '数据库名';
