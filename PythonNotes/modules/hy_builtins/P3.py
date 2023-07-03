@@ -73,6 +73,7 @@ class An:
 
         @wraps(func)
         def decorated(*args, **kwargs):
+            self = args[0]
             f = func(*args, **kwargs)
             return f
 
@@ -101,6 +102,7 @@ class An:
 
         return decorator_n
 
+    @decorator_name
     @item_it_(auth="normal")
     def decorated_method(self, a, b, c=21):
         """sd"""
