@@ -2,7 +2,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, VARCHAR, Boolean, DateTime, ForeignKey, UniqueConstraint
 from sqlalchemy import MetaData, Integer, Column, Table, String, create_engine
 from sqlalchemy.orm import sessionmaker, relationship
-
+from datetime import datetime
 Models = declarative_base()
 
 """表类创建区"""
@@ -13,6 +13,8 @@ class User(Models):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String(100), nullable=False)
+    # onupdate 自动更新，数据更新时才会调用
+    update_time = Column(DateTime, onupdate=datetime.now, server_default=datetime.now)
     # articles = relationship('Article', backref='users')
 
 

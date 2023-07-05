@@ -1,4 +1,4 @@
-from sqlalchemy import MetaData, Integer, Column, Table, String, create_engine
+from sqlalchemy import MetaData, Integer, Column, Table, String, create_engine, text
 from sqlalchemy.orm import sessionmaker
 
 
@@ -9,6 +9,7 @@ class SqliteDb(object):
     def __init__(self, db_path='test.db'):
         db = 'sqlite:///{db_path}?check_same_thread=False'.format(db_path=db_path)
         self.engine = create_engine(db, echo=self.echo)
+        # self.engine = create_engine("sqlite+pysqlite:///:memory:", echo=True, future=True)
 
     def with_session(*func_args):
         func = func_args[-1]
@@ -109,10 +110,48 @@ if __name__ == '__main__':
                      Column("id", Integer, primary_key=True, autoincrement=True),
                      Column("username", String(100), nullable=False)
                      )
-    # 增查改删
+    # ORM增查改删
     name = "神里"
     user = User(username=name)
     sdb.create(user)
     user_read = sdb.read(User, (User.username == name))
     sdb.update(User, (User.id == user_read.id), username="凌华")
     sdb.delete(User, id=user_read.id)
+
+    # session
+    from sqlalchemy import all_
+    session = sdb.get_session()
+    print(session.query(User).get(1).username)
+    print(session.query(User).filter(all_(session.query(User.id).subquery())))
+    print()
+    # # 接近sql语法的ORM
+    from sqlalchemy import insert, select, bindparam
+    from hy_sqlite3.models import Article
+    scalar_sub = select(User.id).where(User.username == bindparam('username')).scalar_subquery()
+    with sdb.engine.connect() as conn:
+        result = conn.execute(
+            insert(Article).values(author_id=scalar_sub),
+            [
+                {"username": 'student1', "title": "title1", "content": "student1", "t": "1"},
+                {"username": 'q1', "title": "title2", "content": "student2"},
+
+            ]
+        )
+
+        print(insert(Article).returning(Article.id, Article.title))
+
+        insert_stmt = insert(Article).from_select(
+            ["title", "content", "author_id"],
+            select(User.username, User.username, User.id)
+        )
+        # print(insert_stmt.returning(Article.title, Article.content, Article.author_id, ))
+        conn.execute(insert_stmt)
+    # 使用原生sql
+    # with sdb.engine.connect() as conn:
+    #     user_sql = text("select * from user")
+    #     q_result = conn.execute(user_sql)
+    #     for dict_row in q_result.mappings():
+    #         x = dict_row['username']
+    #         y = dict_row['id']
+    #         print(x, y)
+
