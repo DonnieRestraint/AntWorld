@@ -15,10 +15,10 @@
   conda deactivate
   ```
 
-- `conda`下载安装第三方安装包
+- `conda`下载安装第三方安装包, 指定环境 默认yes
 
   ```
-  conda install 安装包
+  conda install 安装包 [-n env_name] [-y]
   ```
 
 - `conda`配置文件路径：`C:\Users\用户名\.condarc`
@@ -69,6 +69,10 @@
   pip install pyyaml
   pip install configparser
   pip install scikit-image
+  pip install PyQt5
+  pip install pyqt5-tools
+  pip install pyqtwebengine
+  pip install pyqtchart
   ```
 
   
@@ -102,6 +106,8 @@
   pyqtchart>=5.15.6
   pyqtchart==5.15.6
   ```
+
+  
 
   
 
