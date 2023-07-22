@@ -1,0 +1,2 @@
+from .captcha import captcha
+

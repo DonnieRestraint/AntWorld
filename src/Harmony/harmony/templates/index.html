@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    {% block head %}{% endblock %}
+</head>
+<body>
+{% block body %} {% endblock %}
+
+
+<input type="hidden" id="csrf_token" value="{{ csrf_token }}">
+
+<!-- 登录表单 -->
+<form class="login_form_con">
+    <div class="login_form email">
+        <div class="login_title">
+            <h3>登 录</h3>
+            <a href="javascript:;" class="shutoff"></a>
+        </div>
+        <div class="form_mobile" style="display: none">
+            <input id="toggleBtn1" type="text" name="mobile" autocomplete="off">
+            <div class="input_tip">手机号</div>
+            <div id="login-mobile-err" class="error_tip">手机号不能为空</div>
+        </div>
+        <div class="form_email" >
+            <input id="toggleBtn2" type="text" name="email" autocomplete="off">
+            <div class="input_tip">Email</div>
+            <div id="login-email-err" class="error_tip">邮箱不能为空</div>
+        </div>
+
+        <div class="form_secret">
+            <input id="password" type="password" name="password">
+            <div class="input_tip">密码(不少于6位)</div>
+            <div id="login-password-err" class="error_tip">密码不能为空</div>
+        </div>
+        <div class="avatar">
+
+        </div>
+        <input type="submit" name="" value="登 录" class="input_sub">
+        <div class="down_link">还没有账号？<a href="javascript:;" class="to_register">立即注册</a></div>
+    </div>
+    <div class="mask"></div>
+</form>
+
+<script>
+$(document).ready(function(){
+    $(".btn1").click(function(){
+        $(".form_email").hide();
+    });
+    $(".btn2").click(function(){
+        $(".form_email").show();
+    });
+});
+</script>
+
+</body>
+</html>
