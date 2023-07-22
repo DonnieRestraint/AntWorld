@@ -1,15 +1,21 @@
 from flask import Flask
 
 app = Flask(__name__)
+from markupsafe import escape
 
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+    name = '<script>alert("bad")</script>'
+    print(f"Hello, {escape(name)}!")
+    return f"Hello, {escape(name)}!"
 
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8808, debug=True)
+    # from flaskr import create_app
+    # # create_app().run(port=8808, debug=True)
+    # create_app().run(host="0.0.0.0", port=8808, debug=True)
     """
     官方flask项目
     https://dormousehole.readthedocs.io/en/latest/tutorial/index.html

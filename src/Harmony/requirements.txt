@@ -1,0 +1,15 @@
+redis
+Flask
+Flask-SQLAlchemy
+Flask-Migrate
+Flask-WTF
+Werkzeug
+Flask-MySQLdb
+Flask-Script
+Flask-Session
+Flask-SQLAlchemy
+itsdangerous
+Jinja2
+pillow
+gunicorn
+mysqlclient
